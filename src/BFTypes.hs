@@ -33,3 +33,6 @@ data Token
     | TLoopL
     | TLoopR
     deriving Eq
+
+tokens = [TLoopL, TLoopR, TInc, TDec, TLeft, TRight, TPrint, TGet]
+operatorTokens = drop 2 tokens

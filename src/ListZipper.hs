@@ -4,14 +4,18 @@ module ListZipper where
 data ListZipper a = LZ [a] a [a]
 type BFArray = ListZipper Int
 
+instance Show a => Show (ListZipper a) where
+    show (LZ ls c rs) = show (reverse $ take 3 ls) ++ " " ++ show c ++ " " ++ show (take 3 rs)
 
 mkZipper :: a -> ListZipper a
 mkZipper x = LZ (repeat x) x (repeat x)
 
 -- Moving --
 zLeft :: ListZipper a -> ListZipper a
-zLeft  (LZ (l:ls) c (rs)) = LZ ls l (c:rs)
-zRight  (LZ (l:ls) c (rs)) = LZ ls l (c:rs)
+zLeft  (LZ (l:ls) c rs) = LZ ls l (c:rs)
+
+zRight :: ListZipper a -> ListZipper a
+zRight  (LZ ls c (r:rs)) = LZ (c:ls) r rs
 
 -- Reading --
 getLeft :: ListZipper a -> [a]
