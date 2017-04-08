@@ -2,27 +2,16 @@ module BFTypes where
 
 type BFProgram = [Expr]
 
--- Expr --
 data Expr 
-    = Op Op
-    | Loop [Expr]
-    | IO' IOType
-
-type AST = [Expr]
-    
-data Op
     = OpInc
     | OpDec
     | OpLeft
     | OpRight
-    deriving Eq
+    | IOPrint
+    | IOGet
+    | Loop [Expr]
+    deriving (Show)
 
-data IOType
-    = IOIn
-    | IOOut
-    deriving Eq
-
--- Tokens --
 data Token
     = TInc
     | TDec
@@ -32,7 +21,7 @@ data Token
     | TGet
     | TLoopL
     | TLoopR
-    deriving Eq
+    deriving (Eq, Show)
 
 tokens = [TLoopL, TLoopR, TInc, TDec, TLeft, TRight, TPrint, TGet]
 operatorTokens = drop 2 tokens

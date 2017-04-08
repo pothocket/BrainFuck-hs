@@ -61,4 +61,11 @@ oneOf :: (Eq s) => s -> Parser ParseError s s
 oneOf i = sat (==i)
 
 anyOf :: (Eq s) => [s] -> Parser ParseError s s
-anyOf = foldr1 (<|>) . fmap oneOf
+anyOf = sat . flip elem
+
+parseMaybe :: (Monoid e) => Parser e s (Maybe a) -> Parser e s a
+parseMaybe p = do
+    r <- p
+    case r of
+        Just a  -> return a 
+        Nothing -> empty
