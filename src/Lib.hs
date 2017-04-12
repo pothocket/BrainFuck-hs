@@ -1,8 +1,18 @@
 module Lib
-    ( someFunc
+    ( repl
     ) where
 
-import Data.Monoid ((<>))
+import Eval
+import BFParser
+import Parser
+import ListZipper
 
-someFunc :: IO ()
-someFunc = getLine >>= putStrLn . \x -> x<>x
+import Control.Monad.Except
+
+e = ExceptT . return --why
+
+repl :: ExceptT ParseError IO BFArray
+repl = do
+    input <- liftIO getLine
+    program <- e $ fst <$> parse bfParser (getTokens input)
+    liftIO $ evalBF program initArray 
