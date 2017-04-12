@@ -1,10 +1,10 @@
-module BFParser where 
+module BFParser (getTokens, bfParser) where 
 
 import Data.Maybe (mapMaybe)
 import Control.Monad (sequence)
 import Data.Char
 import Control.Applicative (many, (<|>))
-import Control.Monad.Trans.Maybe
+import Data.Bifunctor
 
 import BFTypes
 import Parser
@@ -39,11 +39,4 @@ operator :: Parser ParseError Token Expr
 operator = parseMaybe $ getExpr <$> anyOf operatorTokens
 
 bfParser :: Parser ParseError Token [Expr]
-bfParser = many $ loop bfParser <|> operator
-
-loop :: Parser ParseError Token [Expr] -> Parser ParseError Token Expr
-loop p = do
-    oneOf TLoopL
-    ts <- p
-    oneOf TLoopR
-    return $ Loop ts
+bfParser = many $ (Loop <$> (between TLoopL TLoopR bfParser)) <|> operator
