@@ -10,7 +10,7 @@ data Expr
     | IOPrint
     | IOGet
     | Loop [Expr]
-    deriving (Show)
+    deriving (Show, Eq)
 
 data Token
     = TInc
