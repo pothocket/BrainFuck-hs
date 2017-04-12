@@ -1,6 +1,8 @@
 module BFTypes where
 
-type BFProgram = [Expr]
+import ListZipper (BFArray)
+
+type BFProgram = BFArray -> IO BFArray
 
 data Expr 
     = OpInc
