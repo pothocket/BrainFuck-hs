@@ -63,6 +63,13 @@ oneOf i = sat (==i)
 anyOf :: (Eq s) => [s] -> Parser ParseError s s
 anyOf = sat . flip elem
 
+between :: (Eq s) => s -> s -> Parser ParseError s [a] -> Parser ParseError s [a]
+between a b p = do
+    oneOf a
+    xs <- p
+    oneOf b
+    return xs
+
 parseMaybe :: (Monoid e) => Parser e s (Maybe a) -> Parser e s a
 parseMaybe p = do
     r <- p
