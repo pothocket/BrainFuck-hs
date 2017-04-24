@@ -5,4 +5,4 @@ import Control.Monad.Except (runExceptT)
 import Lib
 
 main :: IO ()
-main = (runExceptT repl) >>= print
+main = repl
