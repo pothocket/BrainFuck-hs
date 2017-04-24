@@ -26,4 +26,6 @@ evalBF :: [Expr] -> BFArray -> IO BFArray
 evalBF = foldr1 (>=>) . fmap (dispatch evalLoop)
 
 evalLoop :: [Expr] -> BFProgram
-evalLoop = undefined
+evalLoop xs t
+    | getCursor t == 0 = return t
+    | otherwise        = evalLoop xs =<< (evalBF xs t)

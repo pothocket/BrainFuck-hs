@@ -1,9 +1,11 @@
+{- LANGUAGE FlexibleInstances -}
+
 module Parser where 
 
 import Control.Monad (ap, liftM)
 import Control.Applicative (Alternative(..))
 import Data.Monoid ((<>))
-
+import Control.Monad.Error (MonadError(..))
 
 ------------------------------------------------
 -- Types ---------------------------------------
